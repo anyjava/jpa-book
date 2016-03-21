@@ -9,7 +9,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
@@ -24,18 +23,11 @@ import java.util.Date;
         name = "NAME_AGE_UNIQUE",
         columnNames = {"NAME", "AGE"}
 )})
-@TableGenerator(
-        name = "BOARD_SEQ_GENERATOR",
-        table = "MY_SEQUENCES",
-        pkColumnValue = "BOARD_SEQ",
-        allocationSize = 1
-)
 public class Member {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE
-            ,generator = "BOARD_SEQ_GENERATOR")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "NAME", nullable = false, length = 10)
