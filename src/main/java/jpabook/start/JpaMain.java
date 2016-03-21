@@ -28,7 +28,6 @@ public class JpaMain {
         } finally {
             em.close();
         }
-
     }
 
     private static void logic2(EntityManager em) {
@@ -72,7 +71,6 @@ public class JpaMain {
     private static void logic(EntityManager em) {
 
         Member member = new Member();
-        member.setId("id3");
         member.setUsername("SON");
         member.setAge(17);
 
