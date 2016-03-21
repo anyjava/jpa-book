@@ -82,6 +82,32 @@ public class BoardTest {
 
     }
 
+    @Test
+    public void testLazyWrite() {
+        try {
+            this.tx.begin();
+
+            // Given
+            Board board = new Board();
+            board.setId("id2");
+            board.setTitle("notice");
+            board.setContent("notice contents!!!");
+            board.setViewCount(1);
+            em.persist(board);
+
+            System.out.println("BEFORE Commit!!");
+
+            tx.commit();
+
+            System.out.println("AFTER Commit!!");
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.tx.rollback();
+        }
+
+    }
 
 
     @After
