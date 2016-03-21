@@ -8,8 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
@@ -24,10 +24,11 @@ import java.util.Date;
         name = "NAME_AGE_UNIQUE",
         columnNames = {"NAME", "AGE"}
 )})
-@SequenceGenerator(
+@TableGenerator(
         name = "BOARD_SEQ_GENERATOR",
-        sequenceName = "BOARD_SEQ", // 매핑할 데이터베이스 시쿼스 이름
-        initialValue = 1, allocationSize = 1
+        table = "MY_SEQUENCES",
+        pkColumnValue = "BOARD_SEQ",
+        allocationSize = 1
 )
 public class Member {
 
