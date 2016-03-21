@@ -18,7 +18,7 @@ public class JpaMain {
         
         try {
             tx.begin();
-//            logic(em);
+            logic(em);
             logic2(em);
             tx.commit();
 
@@ -28,7 +28,7 @@ public class JpaMain {
         } finally {
             em.close();
         }
-        emf.close();
+
     }
 
     private static void logic2(EntityManager em) {

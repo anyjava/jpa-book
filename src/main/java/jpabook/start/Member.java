@@ -9,6 +9,7 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import java.util.Date;
 
 /**
@@ -16,14 +17,17 @@ import java.util.Date;
  */
 
 @Entity
-@Table(name = "MEMBER")
+@Table(name = "MEMBER", uniqueConstraints = {@UniqueConstraint(
+        name = "NAME_AGE_UNIQUE",
+        columnNames = {"NAME", "AGE"}
+)})
 public class Member {
 
     @Id
     @Column(name = "ID")
     private String id;
 
-    @Column(name = "NAME")
+    @Column(name = "NAME", nullable = false, length = 10)
     private String username;
 
     private Integer age;
