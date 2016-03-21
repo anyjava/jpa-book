@@ -9,6 +9,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 public class BoardTest {
@@ -51,6 +52,37 @@ public class BoardTest {
             this.tx.rollback();
         }
     }
+
+    @Test
+    public void testSameObjectCreateWithJPA() {
+
+        try {
+            this.tx.begin();
+
+            // Given
+            Board board = new Board();
+            board.setId("id2");
+            board.setTitle("notice");
+            board.setContent("notice contents!!!");
+            board.setViewCount(1);
+            em.persist(board);
+
+            tx.commit();
+
+            // When
+            Board selectedBoard = em.find(Board.class, board.getId());
+
+            // Then
+            assertTrue(selectedBoard == board);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.tx.rollback();
+        }
+
+    }
+
+
 
     @After
     public void tearDown() {
