@@ -76,11 +76,12 @@ public class JpaMain {
         Member member = new Member();
         member.setUsername("SON");
         member.setAge(17);
-        member.setTeam(team);
 
         em.persist(member);
         em.persist(team);
 
+
+        team.getMembers().add(member);
 
         Team teamB = new Team();
         teamB.setName("TeamB");
@@ -91,19 +92,6 @@ public class JpaMain {
         Member findMember = em.find(Member.class, member.getId());
         System.out.println("findMember = " + findMember);
 
-        findMember.setTeam(teamB);
-
-        Team team1 = findMember.getTeam();
-        System.out.println("team1 = " + team1);
-
-        int size = findMember.getTeam().getMembers().size();
-        System.out.println("size = " + size);
-
-        // 목록조회
-        List<Member> resultList
-                = em.createQuery("select m from Member m", Member.class)
-                .getResultList();
-        System.out.println("resultList = " + resultList);
 
     }
 }
