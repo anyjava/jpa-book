@@ -5,6 +5,7 @@
 
         <class>jpabook.start.Member</class>
         <class>jpabook.start.Board</class>
+        <class>jpabook.start.Team</class>
 
         <properties>
 

@@ -19,7 +19,7 @@ public class JpaMain {
         try {
             tx.begin();
             logic(em);
-            logic2(em);
+//            logic2(em);
             tx.commit();
 
         } catch (Exception e) {
@@ -70,28 +70,40 @@ public class JpaMain {
 
     private static void logic(EntityManager em) {
 
+        Team team = new Team();
+        team.setName("teamA");
+
         Member member = new Member();
         member.setUsername("SON");
         member.setAge(17);
+        member.setTeam(team);
 
         em.persist(member);
+        em.persist(team);
 
 
-        // 수정
-        member.setAge(10);
-        member.setUsername("hihi");
+        Team teamB = new Team();
+        teamB.setName("TeamB");
+
+        em.persist(teamB);
 
         // 단건조회
         Member findMember = em.find(Member.class, member.getId());
         System.out.println("findMember = " + findMember);
+
+        findMember.setTeam(teamB);
+
+        Team team1 = findMember.getTeam();
+        System.out.println("team1 = " + team1);
+
+        int size = findMember.getTeam().getMembers().size();
+        System.out.println("size = " + size);
 
         // 목록조회
         List<Member> resultList
                 = em.createQuery("select m from Member m", Member.class)
                 .getResultList();
         System.out.println("resultList = " + resultList);
-
-        em.remove(member);
 
     }
 }
