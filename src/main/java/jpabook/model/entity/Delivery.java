@@ -3,23 +3,22 @@ package jpabook.model.entity;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.OneToOne;
 
 /**
- * Created by anyjava on 2016. 3. 21..
+ * Created by anyjava on 2016. 3. 23..
  */
 @Entity
-public class MyMember extends BaseEntity {
+public class Delivery {
 
-    @Id @GeneratedValue
-    @Column(name = "MEMBER_ID")
+    @Id
+    @GeneratedValue
+    @Column(name = "DELIVERY_ID")
     private Long id;
-
-    private String name;
 
 //    private String city;
 //    private String street;
@@ -28,8 +27,11 @@ public class MyMember extends BaseEntity {
     @Embedded
     private Address address;
 
-    @OneToMany(mappedBy = "myMember")
-    private List<Order> orders = new ArrayList<>();
+    @Enumerated(EnumType.STRING)
+    private DeliveryStatus status;
+
+    @OneToOne(mappedBy = "delivery")
+    private Order order;
 
     public Long getId() {
         return id;
@@ -37,14 +39,6 @@ public class MyMember extends BaseEntity {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Address getAddress() {
@@ -55,11 +49,19 @@ public class MyMember extends BaseEntity {
         this.address = address;
     }
 
-    public List<Order> getOrders() {
-        return orders;
+    public DeliveryStatus getStatus() {
+        return status;
     }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
+    public void setStatus(DeliveryStatus status) {
+        this.status = status;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }

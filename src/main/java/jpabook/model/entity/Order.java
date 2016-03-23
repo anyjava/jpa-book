@@ -1,14 +1,17 @@
 package jpabook.model.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,40 +24,28 @@ import java.util.List;
  */
 @Entity
 @Table(name = "ORDERS")
-public class Order {
+public class Order extends BaseEntity {
 
     @Id @GeneratedValue
     @Column(name = "ORDER_ID")
     private Long id;
 
-    @Column(name = "MEMBER_ID")
-    private Long memberId;
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
-    r
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    @ManyToOne
-    @JoinColumn(name = "ORDER_ID")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "MEMBER_ID")
     private MyMember myMember;
 
-    @OneToMany(mappedBy = "")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
-    }
-
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
-    }
-
-    public MyMember getMyMember() {
-        return myMember;
-    }
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "DELIVERY_ID")
+    private Delivery delivery;
 
     // ---- 연관관계 매핑 메소드 ----
     public void setMyMember(MyMember myMember) {
@@ -71,20 +62,35 @@ public class Order {
     }
     // -----------------------------
 
+
+    public Delivery getDelivry() {
+        return delivery;
+    }
+
+    public void setDelivry(Delivery delivry) {
+        this.delivery = delivry;
+        delivry.setOrder(this);
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
+    public MyMember getMyMember() {
+        return myMember;
+    }
+
+
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getMemberId() {
-        return memberId;
-    }
-
-    public void setMemberId(Long memberId) {
-        this.memberId = memberId;
     }
 
     public Date getOrderDate() {
