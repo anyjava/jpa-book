@@ -46,13 +46,11 @@ public class JpaMain {
         em.persist(team);
 
 
-        Query query = em.createQuery("SELECT m.username, m.age FROM Member m where m.age > 10");
-        List resultList = query.getResultList();
+        TypedQuery<MemberDto> query = em.createQuery("SELECT new jpabook.start.MemberDto(m.username, m.age) FROM Member m where m.age > 10", MemberDto.class);
+        List<MemberDto> resultList = query.getResultList();
 
-        for (Object o : resultList) {
-            Object[] result = (Object[]) o;
-            System.out.println("result.username = " + result[0]);
-            System.out.println("result.age = " + result[1]);
+        for (MemberDto memberDto : resultList) {
+            System.out.println("memberDto = " + memberDto);
         }
 
     }
