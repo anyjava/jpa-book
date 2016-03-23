@@ -1,5 +1,32 @@
+plugins {
+    id "com.ewerk.gradle.plugins.querydsl" version "1.0.3"
+}
+
 group 'net.anyjava'
 version '1.0-SNAPSHOT'
+
+
+
+ext {
+    querydslVersion = '3.7.2'
+    querydslSrcDir = 'src/main/generated'
+}
+
+querydsl {
+    library = "com.mysema.querydsl:querydsl-apt:$querydslVersion"
+    jpa=true
+    querydslSourcesDir = querydslSrcDir
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', querydslSrcDir]
+        }
+    }
+}
+
+
 
 apply plugin: 'java'
 
@@ -12,6 +39,10 @@ repositories {
 dependencies {
     compile("org.hibernate:hibernate-entitymanager:4.3.11.Final")
     compile("com.h2database:h2:1.4.187")
+
+    compile("com.mysema.querydsl:querydsl-jpa:$querydslVersion")
+    compile("com.mysema.querydsl:querydsl-apt:$querydslVersion")
+
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 
