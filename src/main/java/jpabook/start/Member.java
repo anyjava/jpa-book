@@ -58,6 +58,7 @@ public class Member {
     }
 
     public void setTeam(Team team) {
+        team.getMembers().add(this);
         this.team = team;
     }
 

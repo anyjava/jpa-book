@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  * Created by anyjava on 2016. 3. 21..
@@ -23,6 +25,31 @@ public class OrderItem {
 
     private int orderPrice;
     private int count;
+
+    @ManyToOne
+    @JoinColumn(name = "ORDER_ID")
+    private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "ITEM_ID")
+    private Item item;
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+        this.order.getOrderItems().add(this);
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
 
     public Long getId() {
         return id;

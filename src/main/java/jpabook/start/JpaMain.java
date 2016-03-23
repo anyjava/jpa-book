@@ -76,12 +76,14 @@ public class JpaMain {
         Member member = new Member();
         member.setUsername("SON");
         member.setAge(17);
+        member.setTeam(team);
 
         em.persist(member);
         em.persist(team);
 
 
-        team.getMembers().add(member);
+
+
 
         Team teamB = new Team();
         teamB.setName("TeamB");
